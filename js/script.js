@@ -70,14 +70,16 @@ function generateTitleLinks(customSelector = '') {
     }
 
     titleList.innerHTML = html;
+    const links = document.querySelectorAll('.titles a');
+    console.log(links)
+
+    for (let link of links) {
+        link.addEventListener('click', titleClickHandler);
+    }
+
 }
 generateTitleLinks();
-const links = document.querySelectorAll('.titles a');
-console.log(links)
 
-for (let link of links) {
-    link.addEventListener('click', titleClickHandler);
-}
 
 //Moduł 6
 
@@ -254,7 +256,7 @@ function generateTags() {
                 /* END LOOP: for each found tag link */
             }
             /* execute function "generateTitleLinks" with article selector as argument */
-            generateTitleLinks('[data-author~="' + author + '"]');
+            generateTitleLinks('[data-author="' + author + '"]');
         }
 
     function addClickListenersToAuthors() {
