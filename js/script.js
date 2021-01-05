@@ -240,7 +240,7 @@ addClickListenersToTags();
 
 function generateAuthors() {
 
-    let allAuthors = [];
+    let allAuthors = {};
 
     /* find all articles */
     const articles = document.querySelectorAll(optArticleSelector);
@@ -257,19 +257,27 @@ function generateAuthors() {
         /* generate HTML of the link */
         const linkHTML = '<a href="#author-' + articleAuthor + '">' + articleAuthor + '</a>';
 
-        if(allAuthors.indexOf(linkHTML) == -1){
-        /* [NEW] add generated code to allTags array */
-        allAuthors.push(linkHTML);
-        }
+        if(!allAuthors.hasOwnProperty(articleAuthor)){
+        /* [NEW] add generated code to allAuthors array */
+        allAuthors[articleAuthor] = 1;
+      } else {
+        allAuthors[articleAuthor]++;
+      }
         /* insert HTML of all the links into the author wrapper */
         authorwrapper.innerHTML = linkHTML;
         /* END LOOP: for every article: */
     }
     /* [NEW] find list of tags in right column */
-    const tagAuthor = document.querySelector('.authors');
+    const articleList = document.querySelector('.authors');
+    // create variable for all links HTML code
+    let allAuthorsHTML = '';
+    // Start loop for each article in allAuthors
+    for (let articleAuthor in allAuthors) {
 
-    /* [NEW] add html from allTags to tagList */
-    tagAuthor.innerHTML = allAuthors.join(' ');
+      // generate code of a link and add it to allTagsHTML
+      allAuthorsHTML += '<li><a href="#author- '+ articleAuthor + '"">'+ articleAuthor +' (' + allAuthors[articleAuthor] +')</a>. <li>';
+    }
+    articleList.innerHTML = allAuthorsHTML;
     }
 
 generateAuthors();
