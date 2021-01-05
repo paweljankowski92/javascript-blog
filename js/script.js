@@ -1,5 +1,31 @@
 'use strict';
 
+const opts = {
+    tagSizes: {
+        count: 5,
+        classPrefix: 'tag-size-',
+    },
+};
+
+const select = {
+    all: {
+        articles: '.post',
+        linksTo: {
+            tags: 'a[href^="#tag-"]',
+            authors: 'a[href^="#author-"]',
+        },
+    },
+    article: {
+        tags: '.post-tags .list',
+        author: '.post-author',
+    },
+    listOf: {
+        titles: '.titles',
+        tags: '.tags.list',
+        authors: '.authors.list',
+    },
+};
+
 function titleClickHandler(event) {
     event.preventDefault();
     const clickedElement = this;
@@ -257,12 +283,12 @@ function generateAuthors() {
         /* generate HTML of the link */
         const linkHTML = '<a href="#author-' + articleAuthor + '">' + articleAuthor + '</a>';
 
-        if(!allAuthors.hasOwnProperty(articleAuthor)){
-        /* [NEW] add generated code to allAuthors array */
-        allAuthors[articleAuthor] = 1;
-      } else {
-        allAuthors[articleAuthor]++;
-      }
+        if (!allAuthors.hasOwnProperty(articleAuthor)) {
+            /* [NEW] add generated code to allAuthors array */
+            allAuthors[articleAuthor] = 1;
+        } else {
+            allAuthors[articleAuthor]++;
+        }
         /* insert HTML of all the links into the author wrapper */
         authorwrapper.innerHTML = linkHTML;
         /* END LOOP: for every article: */
@@ -274,11 +300,11 @@ function generateAuthors() {
     // Start loop for each article in allAuthors
     for (let articleAuthor in allAuthors) {
 
-      // generate code of a link and add it to allTagsHTML
-      allAuthorsHTML += '<li><a href="#author- '+ articleAuthor + '"">'+ articleAuthor +' (' + allAuthors[articleAuthor] +')</a>. <li>';
+        // generate code of a link and add it to allTagsHTML
+        allAuthorsHTML += '<li><a href="#author- ' + articleAuthor + '"">' + articleAuthor + ' (' + allAuthors[articleAuthor] + ')</a>. <li>';
     }
     articleList.innerHTML = allAuthorsHTML;
-    }
+}
 
 generateAuthors();
 
